@@ -12,11 +12,11 @@
 
 ### MyBatis
 
-+ [Mybatis基础](Mybatis基础.md)
++ [Mybatis基础](note/Mybatis基础.md)
 
 ### Spring MVC
 
-+ [Spring MVC工作原理](Spring MVC工作原理.md)
++ [Spring MVC工作原理](note/Spring MVC工作原理.md)
 
 
 
@@ -25,3 +25,9 @@
 ### MySQL
 
 + [MySQL数据库深入（一）](note/MySQL深入（一）.md)
+
+
+
+## 其他
+
++ [链接收藏](note/链接收藏.md)
