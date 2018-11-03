@@ -16,7 +16,7 @@
 
 ### Spring MVC
 
-+ [Spring MVC工作原理](note/Spring MVC工作原理.md)
++ [Spring MVC工作原理](note/SpringMVC工作原理.md)
 
 
 
