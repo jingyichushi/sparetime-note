@@ -23,7 +23,7 @@ MySQL可以允许于多个系统上，并且支持多种语言。这些编程语
 
 MySQL支持大型数据库，支持5000万条记录的数据仓库，32位系统表文件最大可支持4GB，64位系统支持最大的表文件为8TB。
 
-MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自己的Mysql系统。
+MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自己的MySQL系统。
 
 
 
@@ -46,9 +46,9 @@ MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自
 
 **高级MySQL涉及到知识：**
 
-+ mysql内核
++ MySQL内核
 + sql优化
-+ mysql服务器的优化
++ MySQL服务器的优化
 + 各种参数常量设定
 + 查询语句优化
 + 主从复制
@@ -59,40 +59,40 @@ MySQL是可以定制的，采用了GPL协议，你可以修改源码来开发自
 
 ### MySQL 操作
 
-**mysql服务的相关操作**：
+**MySQL服务的相关操作**：
 
 
-查看MySQL安装时创建的mysql用户和mysql组：
+查看MySQL安装时创建的MySQL用户和MySQL组：
 ```
-cat /etc/passwd | grep mysql
-cat /etc/group | grep mysql
+cat /etc/passwd | grep MySQL
+cat /etc/group | grep MySQL
 ```
-mysql服务的启动和停止：
-查看MySQL启停状态: ` ps -ef | grep mysql`
+MySQL服务的启动和停止：
+查看MySQL启停状态: ` ps -ef | grep MySQL`
 
 **服务启动和停止操作:**
 
 ```
-/etc/init.d/mysql start
-/etc/init.d/mysql stop
+/etc/init.d/MySQL start
+/etc/init.d/MySQL stop
 ```
 或者
 ```
-service mysql start
-service mysql stop
+service MySQL start
+service MySQL stop
 ```
 
 
 
-**设置MySQL启动密码**（默认安装没有密码，直接输入`mysql`启动）：
-`/usr/bin/mysqladmin -u root password admin`
-再次启动：`mysql -uroot -p admin`
+**设置MySQL启动密码**（默认安装没有密码，直接输入`MySQL`启动）：
+`/usr/bin/MySQLadmin -u root password admin`
+再次启动：`MySQL -uroot -p admin`
 
 
 
 **设置MySQL自启服务：**
-设置自动启动：`chkconfig mysql on`
-检查是否设置了自动启动：`chkconfig --list | grep mysql`
+设置自动启动：`chkconfig MySQL on`
+检查是否设置了自动启动：`chkconfig --list | grep MySQL`
 
 `ntsysv`查看kai开机自启的程序
 
@@ -101,18 +101,18 @@ service mysql stop
 
 
 **在linux下查看安装目录**：
-`ps -ef|grep mysql`
+`ps -ef|grep MySQL`
 
 ![MySQL数据库深入（一）](img/2018.11.03/1.png)
 
 **修改配置文件位置:**
-`cp /usr/share/mysql/my-huge.cnf /etc/my.cnf`或者`cp /usr/share/mysql/my-default.cnf /etc/my.cnf`
+`cp /usr/share/MySQL/my-huge.cnf /etc/my.cnf`或者`cp /usr/share/MySQL/my-default.cnf /etc/my.cnf`
 
 
 
-**mysql配置文件查找优先级：**
+**MySQL配置文件查找优先级：**
 
-/etc/my.cnf 	/etc/mysql/my.cnf 	/usr/etc/my.cnf 	~/.my.cnf
+/etc/my.cnf 	/etc/MySQL/my.cnf 	/usr/etc/my.cnf 	~/.my.cnf
 
 
 
@@ -130,13 +130,13 @@ vim /etc/my.cnf
 [client]
 #password = your_password
 port = 3306
-socket = /var/lib/mysql/mysql.sock
+socket = /var/lib/MySQL/MySQL.sock
 
 # 这一行需要设置字符集
 default-character-set=utf8
  
 # The MySQL server
-[mysqld]
+[MySQLd]
 port = 3306
 
 # 还有这三行
@@ -144,7 +144,7 @@ character_set_server=utf8
 character_set_client=utf8
 collation-server=utf8_general_ci
 
-socket = /var/lib/mysql/mysql.sock
+socket = /var/lib/MySQL/MySQL.sock
 skip-external-locking
 key_buffer_size = 384M
 max_allowed_packet = 1M
@@ -158,7 +158,7 @@ query_cache_size = 32M
 # Try number of CPU's*2 for thread_concurrency
 thread_concurrency = 8
  
-[mysql]
+[MySQL]
 no-auto-rehash
 # 还有这一行
 default-character-set=utf8
@@ -184,7 +184,7 @@ log-err=#错误日志文件的位置
 ```
 
 **查询日志log**:
-默认关闭，记录查询的sql语句，如果开启会减低mysql的整体性能，因为记录日志也是需要消耗系统资源的.
+默认关闭，记录查询的sql语句，如果开启会减低MySQL的整体性能，因为记录日志也是需要消耗系统资源的.
 
 **数据文件:**
 
@@ -192,7 +192,7 @@ log-err=#错误日志文件的位置
     + windows
       D:\devSoft\MySQLServer5.5\data目录下
     + Linux:
-      默认路径 cd /var/lib/mysql/
+      默认路径 cd /var/lib/MySQL/
       看看当前系统中的全部库后再进去 ls -1F | grep 
 + frm文件: 存放表结构
 + myd文件: 存放表数据
@@ -203,7 +203,7 @@ log-err=#错误日志文件的位置
 Windows: my.ini文件
 Linux: /etc/my.cnf文件
 
-### Mysql架构
+### MySQL架构
 
 我们来先看官网的一张图：
 
@@ -212,25 +212,24 @@ Linux: /etc/my.cnf文件
 我们来介绍一下各个部分：
 **Connectors**：不同语言中与SQL的交互。
 
-**Management Serveices & Utilities**：系统管理和控制工具。
-
 **Connection Pool**：管理缓冲用户连接，线程处理等需要缓存的需求。
 负责监听对MySQL Server的各种请求，转发所有连接请求到线程管理模块。每一个连接上MySQL Server的客户端请求都会被分配（或创建）一个连接线程为其单独服务。而连接线程的主要工作就是负责 MySQL Server与客户端的通信，接受客户端的命令请求，传递Server端的结果信息等。
+
+**Management Serveices & Utilities**：系统管理和控制工具。
 
 **SQL Interface**：接受用户的SQL命令，并且返回用户需要查询的结果。
 
 **Parser**：验证和解析SQL命令。
+
 将SQL语句进行语义和语法的分析，分解成数据结构，然后按照不同的操作类型进行分类，然后做出针对性的转发到后续步骤，以后SQL语句的传递和处理就是基于这个结构的。
 如果在分解构成中遇到错误，那么就说明这个sql语句是不合理的。
 
 **Optimizer**：SQL语句在查询之前会使用查询优化器对查询进行优化。就是优化客户端请求的 query（sql语句） ，根据客户端请求的 query 语句，和数据库中的一些统计信息，在一系列算法的基础上进行分析，得出一个最优的策略，告诉后面的程序如何取得这个 query 语句的结果。
 
-**Cache & Buffer**：主要功能是将客户端提交给MySQL的Select类查询请求的返回结果集cache到内存中，与该 query 的一个hash值做一个对应。该查询所取数据的基表发生任何数据的变化之后，MySQL会自动使该 查询的Cache失效。在读写比例非常高的应用系统中，Query Cache对性能的提高是非常显著的。当然它对内存的消耗也是非常大的。
+**Cache & Buffer**：主要功能是将客户端提交给MySQL的Select类查询请求的返回结果集缓存到内存中，与该 query 的一个hash值做一个对应。该查询所取数据的基表发生任何数据的变化之后，MySQL会自动使该查询的Cache失效。在读写比例非常高的应用系统中，Query Cache对性能的提高是非常显著的。当然它对内存的消耗也是非常大的。
 
  **Storage Engines**：存储引擎真正的负责了MySQL中数据的存储和提取，服务器通过API与存储引擎进行通信。
 注意，存储引擎时基于表的，不是基于数据库的。
-
-
 
 和其它数据库相比，MySQL有点与众不同，它的架构可以在多种不同场景中应用并发挥良好作用。主要体现在存储引擎的架构上，**插件式的存储引擎架构将查询处理和其它的系统任务以及数据的存储提取相分离。**这种架构可以根据业务的需求和实际需要选择合适的存储引擎。
 
@@ -250,19 +249,19 @@ Linux: /etc/my.cnf文件
 数据存储层，主要是将数据存储在运行于裸设备的文件系统之上，并完成与存储引擎的交互。
 
 **查询说明：**
-mysql的查询流程大致是：
-1.mysql客户端通过协议与mysql服务器建连接，发送查询语句，先检查查询缓存，如果命中，直接返回结果，否则进行语句解析。
+MySQL的查询流程大致是：
+1.MySQL客户端通过协议与MySQL服务器建连接，发送查询语句，先检查查询缓存，如果命中，直接返回结果，否则进行语句解析。
 2.有一系列预处理，比如检查语句是否写正确了，然后是查询优化（比如是否使用索引扫描，如果是一个不可能的条件，则提前终止），生成查询计划，然后查询引擎启动，开始执行查询，从底层存储引擎调用API获取数据，最后返回给客户端。怎么存数据、怎么取数据，都与存储引擎有关。
-3.mysql默认使用的BTREE索引，并且一个大方向是，无论怎么折腾sql，至少在目前来说，mysql最多只用到表中的一个索引。
+3.MySQL默认使用的BTREE索引，并且一个大方向是，无论怎么折腾sql，至少在目前来说，MySQL最多只用到表中的一个索引。
 
-### Mysql存储引擎
+### MySQL存储引擎
 
-#### Mysql存储引擎查看
-查看Mysql存储引擎命令
+#### MySQL存储引擎查看
+查看MySQL存储引擎命令
 查看当前的MySQL 提供什么存储引擎
 
 ```
-mysql> show engines;
+MySQL> show engines;
 ```
 
 ![MySQL数据库深入（一）](img/2018.11.03/3.png)
@@ -312,7 +311,7 @@ MySQL 5.6版本中，作为默认存储引擎。
 
 阿里巴巴通过Percona为MySQL数据库服务器进行了改进，在功能和性能上较MySQL有着很显著的提升。该版本提升了在高负载情况下的InnoDB的性能、为DBA提供一些非常有用的性能诊断工具；另外有更多的参数和命令来控制服务器行为。
 该公司新建了一款存储引擎叫xtradb完全可以替代innodb,并且在性能和并发上做得更好,
-阿里巴巴大部分mysql数据库其实使用的percona的原型加以修改。
+阿里巴巴大部分MySQL数据库其实使用的percona的原型加以修改。
 
 
 
@@ -324,9 +323,17 @@ MySQL 5.6版本中，作为默认存储引擎。
 MySQL性能下降主要有：SQL慢、执行时间长、等待时间长
 
 1.查询语句写的烂 
+
 2.索引失效（索引分为单值索引和复合索引）
+
++ 单值索引创建： create index idx_user_name on user(name)；
++ 复合索引创建：create index idx_user_nameEmail on user(name,email)；
+
 3.关联查询太多join 
+
 4.服务器调优及参数设置（缓存，线程数等）
+
+
 
 ### join查询
 
@@ -415,7 +422,7 @@ INSERT INTO tbl_emp(NAME,deptId) VALUES('z5',1);
 INSERT INTO tbl_emp(NAME,deptId) VALUES('w5',2);
 INSERT INTO tbl_emp(NAME,deptId) VALUES('w6',2);
 INSERT INTO tbl_emp(NAME,deptId) VALUES('s7',1);
-INSERT INTO tbl_emp(NAME,deptId) VALUES('s8',2);
+INSERT INTO tbl_emp(NAME,deptI d) VALUES('s8',2);
 INSERT INTO tbl_emp(NAME,deptId) VALUES('s9',51);
 
 ```
@@ -453,10 +460,10 @@ INSERT INTO tbl_emp(NAME,deptId) VALUES('s9',51);
 
 ![MySQL数据库深入（一）](img/2018.11.03/13.png)
 
-
 6、AB全有
 **MySQL Full Join的实现 因为MySQL不支持FULL JOIN,下面是替代方法
 left join + union(可去除重复数据)+ right join**
+
 ```
 SELECT *
 FROM tbl_emp a LEFT JOIN tbl_dept b ON a.deptId = b.id
@@ -487,9 +494,9 @@ WHERE a.`deptId` IS NULL;
 
 MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的**数据结构**。
 
-可以得到索引的本质：索引是数据结构。
+可以看出，索引的本质：索引是数据结构。
 
-索引的目的在于提高查询效率，可以类比字典，如果要查“mysql”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。
+索引的目的在于提高查询效率，可以类比字典，如果要查“MySQL”这个单词，我们肯定需要定位到m字母，然后从下往下找到y字母，再找到剩下的sql。
 
 如果没有索引，那么你可能需要a----z，如果我想找到Java开头的单词呢？或者Oracle开头的单词呢？
 
@@ -517,13 +524,13 @@ B+Tree意味着所有的值（被索引的列）都是按顺序存储的，每�
 
 **B+的特性:**
 1、所有关键字都出现在叶子结点的链表中，且链表中的关键字是有序的。
-2、不可能在非叶子结点命中。
+2、不可能在非叶子结点命中，非叶子节点不存储数据。
 3、非叶子结点相当于是叶子结点的索引，叶子结点相当于是存储（关键字）数据的数据层。
 4、更适合文件索引系统。
 
 如上图所示，在B+Tree的每个叶子节点增加一个指向相邻叶子节点的指针，就形成了带有顺序访问指针的B+Tree。做这个优化的目的是为了提高区间访问的性能。例如，要查询key为从18到49的所有数据记录，当找到18后，只需顺着节点和指针顺序遍历就可以一次性访问到所有数据节点，极大提到了区间查询效率。
 
-我们后文会对索引的原理进行深入讲解、
+我们后文会对索引的原理进行深入讲解。
 
 #### 索引的优缺点
 
@@ -538,7 +545,6 @@ B+Tree意味着所有的值（被索引的列）都是按顺序存储的，每�
 
 
 #### 索引分类
-
 
 **单值索引**
 即一个索引只包含单个列，一个表可以有多个单列索引
@@ -603,7 +609,7 @@ B-Tree是为磁盘等外存储设备设计的一种平衡查找树。因此在�
 InnoDB存储引擎中有页（Page）的概念，页是其磁盘管理的最小单位。InnoDB存储引擎中默认每个页的大小为16KB，可通过参数innodb_page_size将页的大小设置为4K、8K、16K，在MySQL中可通过如下命令查看页的大小：
 
 ```
-mysql> show variables like 'innodb_page_size';
+MySQL> show variables like 'innodb_page_size';
 ```
 
 而系统一个磁盘块的存储空间往往没有这么大，因此InnoDB每次申请磁盘空间时都会是若干地址连续磁盘块来达到页的大小16KB。InnoDB在把磁盘数据读入到磁盘时会以页为基本单位，在查询数据时如果一个页中的每条数据都能有助于定位数据记录的位置，这将会减少磁盘I/O次数，提高查询效率。
@@ -612,7 +618,7 @@ B-Tree结构的数据可以让系统高效的找到数据所在的磁盘块。�
 
 一棵m阶的B-Tree有如下特性： 
 1. 每个节点最多有m个孩子。 
-2. 除了根节点和叶子节点外，其它每个节点至少有Ceil(m/2)个孩子。 
+2. 除了根节点和叶子节点外，其它每个节点至少有ceil(m/2)个孩子。 
 3. 若根节点不是叶子节点，则至少有2个孩子。
 4. 所有叶子节点都在同一层，且不包含其它关键字信息。 
 5. 每个非终端节点包含n个关键字信息（P0,P1,…Pn, k1,…kn） 
@@ -634,7 +640,7 @@ B-Tree中的每个节点根据实际情况可以包含大量的关键字信息�
 根据P2指针找到磁盘块8，读入内存。【磁盘I/O操作第3次】
 在磁盘块8中的关键字列表中找到关键字29。
 
-分析上面过程，发现需要3次磁盘I/O操作，和3次内存查找操作。由于内存中的关键字是一个有序表结构，可以利用二分法查找提高效率。**而3次磁盘I/O操作是影响整个B-Tree查找效率的决定因素。**B-Tree相对于AVLTree缩减了节点个数，使每次磁盘I/O取到内存的数据都发挥了作用，从而提高了查询效率。
+分析上面过程，发现需要**3次磁盘I/O操作，和3次内存查找操作**。由于内存中的关键字是一个有序表结构，可以利用二分法查找提高效率。**而3次磁盘I/O操作是影响整个B-Tree查找效率的决定因素。**B-Tree相对于AVLTree缩减了节点个数，使每次磁盘I/O取到内存的数据都发挥了作用，从而提高了查询效率。
 
 #### B+Tree
 
@@ -652,6 +658,19 @@ B+Tree相对于B-Tree有几点不同：
 ![MySQL数据库深入（一）](img/2018.11.03/18.png)
 
 通常在B+Tree上有两个头指针，一个指向根节点，另一个指向关键字最小的叶子节点，而且所有叶子节点（即数据节点）之间是一种链式环结构。因此可以对B+Tree进行两种查找运算：一种是对于主键的范围查找和分页查找，另一种是从根节点开始，进行随机查找。
+
+#### 为什么使用B+Tree而不使用B-Tree?
+
+B-树和B+树最重要的一个区别就是B+树只有叶节点存放数据，其余节点用来索引，而B-树是每个索引节点都会有Data域。这就决定了B+树更适合用来存储外部数据，也就是所谓的磁盘数据。
+
+从Mysql（Inoodb）的角度来看，B+树是用来充当索引的，一般来说索引非常大，尤其是关系性数据库这种数据量大的索引能达到亿级别，所以为了减少内存的占用，索引也会被存储在磁盘上。
+
+那么Mysql如何衡量查询效率呢？磁盘IO次数，B-树（B类树）的特定就是每层节点数目非常多，层数很少，目的就是为了就少磁盘IO次数，当查询数据的时候，最好的情况就是很快找到目标索引，然后读取数据，使用B+树就能很好的完成这个目的，但是B-树的每个节点都有data域（指针），这无疑增大了节点大小，说白了增加了磁盘IO次数（磁盘IO一次读出的数据量大小是固定的，单个数据变大，每次读出的就少，IO次数增多，一次IO多耗时啊！），而B+树除了叶子节点其它节点并不存储数据，节点小，磁盘IO次数就少。这是优点之一。
+另一个优点是什么，B+树所有的Data域在叶子节点，一般来说都会进行一个优化，就是将所有的叶子节点用指针串起来。这样遍历叶子节点就能获得全部数据，这样就能进行区间访问啦。
+
+(数据库索引采用B+树的主要原因是 B树在提高了磁盘IO性能的同时并没有解决元素遍历的效率低下的问题。正是为了解决这个问题，B+树应运而生。B+树只要遍历叶子节点就可以实现整棵树的遍历。而且在数据库中基于范围的查询是非常频繁的（可以看成计算机中经典的局部性原理），而B树不支持这样的操作（或者说效率太低）)
+
+
 
 
 #### 为什么使用B-Tree（B+Tree）
@@ -720,7 +739,7 @@ dmax=floor(pagesize/(keysize+datasize+pointsize))dmax=floor(pagesize/(keysize+da
 floor表示向下取整。由于B+Tree内节点去掉了data域，因此可以拥有更大的出度，拥有更好的性能。
 
 #### 聚簇索引与非聚簇索引
-mysql中普遍使用B+Tree做索引，但在实现上又根据聚簇索引和非聚簇索引而不同。
+MySQL中普遍使用B+Tree做索引，但在实现上又根据聚簇索引和非聚簇索引而不同。
 
 **1、聚簇索引**
 
@@ -810,16 +829,16 @@ c.数据重复且分布平均的表字段，因此应该只为最经常查询和
 
 ### 性能分析
 
-#### Mysql Query Optimizer
+#### MySQL Query Optimizer
 
-mysql内部有自己的优化器，当收到sql时，会按它自己认为最好的优化方式去优化。
+MySQL内部有自己的优化器，当收到sql时，会按它自己认为最好的优化方式去优化。
 
 专门负责优化SELECT语句的优化器模块MySQL Query Optimizer通过计算分析收集的各种系统统计信息，为Query给出最优的执行计划——最优的数据检索方式。
 
 客户端向MySQL发送Query请求，命令解析器模块完成请求分类，把SELECT Query转发给MySQL Query Optimizer，MySQL Query Optimizer首先会对整条Query进行优化，进行常量表达式的预算，直接换算成常量值。并对Query中的查询条件进行简化和转换，如去掉一些无用或显而易见的条件、结构调整等。然后分析Query中的Hint信息（如果有），看Hint信息是否可以完全确定该Query的执行计划。如果没有Hint或Hint信息还不足以完全确定执行计划，则会读取所涉及对象的统计信息，根据Query进行相应的计算分析，最后得出执行计划。
 
 
-#### Mysql常见瓶颈
+#### MySQL常见瓶颈
 
 CPU：CPU在饱和的时候一般发生在数据装入内存或从磁盘上读取数据的时候
 
@@ -830,7 +849,7 @@ IO：磁盘I/O瓶颈发生在装入数据远大于内存容量时(IO频繁)
 #### Explain
 
 **Explain是什么？**
-查看计划执行。使用Explain可以模拟优化器执行SQl查询语句，从而知道mysql是如何处理你的sql语句的，从而分析是否存在性能结构。
+查看计划执行。使用Explain可以模拟优化器执行SQl查询语句，从而知道MySQL是如何处理你的sql语句的，从而分析是否存在性能结构。
 
 
 **Explain能干什么？**
@@ -1112,7 +1131,7 @@ key_len显示的值为索引字段的最大可能长度，**并非实际使用�
 ![MySQL数据库深入（一）](img/2018.11.03/54.png)
 
 **⑩.Extra**：包含不适合在其他列中显示但十分重要的额外信息
-1.using filesort：这个说明mysql会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。
+1.using filesort：这个说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。
 MySQL有两种方式可以生成有序的结果，通过排序操作或者使用索引，当Extra中出现了Using filesort说明MySQL使用了后者，但注意虽然叫filesort但并不是说明就是用了文件来进行排序，只要可能排序都是在内存里完成的。大部分情况下**利用索引排序更快**，所以一般这时也要考虑优化查询了。
 
 ![MySQL数据库深入（一）](img/2018.11.03/55.png)
