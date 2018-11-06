@@ -444,7 +444,6 @@ INSERT INTO tbl_emp(NAME,deptId) VALUES('s9',51);
 
 ![MySQL数据库深入（一）](img/2018.11.03/10.png)
 
-
 3、A、B两表共有+B的独有
 `select * from tbl_emp a right join tbl_dept b on a.deptId = b.id;`
 
@@ -849,8 +848,7 @@ IO：磁盘I/O瓶颈发生在装入数据远大于内存容量时(IO频繁)
 #### Explain
 
 **Explain是什么？**
-查看计划执行。使用Explain可以模拟优化器执行SQl查询语句，从而知道MySQL是如何处理你的sql语句的，从而分析是否存在性能结构。
-
+查看执行计划。使用Explain可以模拟优化器执行SQl查询语句，从而知道MySQL是如何处理你的sql语句的，从而分析是否存在性能结构。
 
 **Explain能干什么？**
 a.表的读取顺序
@@ -873,6 +871,7 @@ Explain+SQL语句
 我们通过实验来解释一下上面图的各个字段：
 实验准备：
 **1.创建测试表**
+
 ```sql
 CREATE TABLE people(
     id bigint auto_increment primary key,
@@ -909,6 +908,7 @@ values
 ```
 
 **3.创建索引用来测试**
+
 ```sql
 alter table people add key(zipcode,firstname,lastname);
 ```
@@ -936,7 +936,6 @@ DERIVED表示衍生表。
 
 ![MySQL数据库深入（一）](img/2018.11.03/32.png)
 
-
 **②.select_type**：主要包含下面几种类型：
 1.SIMPLE:简单的select查询，查询中**不包含子查询或者UNION**
 `explain select zipcode,firstname,lastname from people;`
@@ -953,7 +952,7 @@ DERIVED表示衍生表。
 
 ![MySQL数据库深入（一）](img/2018.11.03/35.png)
 
-4.DERIVED:在FROM列表中包含的子查询被标记为DERIVED(衍生)，MYSQL会递归查询执行这些子查询，把结果放在临时表中。
+4.DERIVED:在FROM列表中包含的子查询被标记为DERIVED(衍生)，MYSQL会递归查询执行这些子查询，把结果放在**临时表**中。
 `explain select zipcode from (select * from people a) b;`
 
 ![MySQL数据库深入（一）](img/2018.11.03/36.png)
@@ -999,16 +998,15 @@ DERIVED表示衍生表。
 
 type显示的是访问类型，是较为重要的指标，**结果值从最好到最坏依次是**：
 
-system>const>eq_ref>ref>fulltext>ref_or_null>index_merge>unique_subquery>index_subquery>range>index>ALL。
+system>const>eq_ref>ref>`fulltext>ref_or_null>index_merge>unique_subquery>index_subquery`>range>index>ALL。
 
 工作中常见的有：
 system>const>eq_ref>ref>rang>index>all
 
 一般来说，得保证查询至少达到range级别，最好能达到ref。
 
-
 下面对这几种进行讲解：
-1.system:这是const连接类型的一种特例，表仅有一行满足条件。
+1.system:这是const连接类型的一种特例，表仅有一行,满足条件。
 `explain select * from (select * from people where id = 1 )b;`
 
 ![MySQL数据库深入（一）](img/2018.11.03/42.png)
@@ -1091,7 +1089,7 @@ eq_ref可以用于使用 = 操作符比较的带索引的列。比较值可以�
 为了说明我们重新建立上面的people2和people_car2表，仍然使用MyISAM但是不给id指定primary key。然后我们分别给id和people_id建立非唯一索引。
 
 ```sql
-reate index people_id on people2(id);
+create index people_id on people2(id);
 create index people_id on people_car2(people_id);
 ```
 
@@ -1111,16 +1109,19 @@ create index people_id on people_car2(people_id);
 
 7.ALL:最慢的一种方式，即全表扫描。
 
-
 **⑤.possible_keys**:显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则该索引将被列出，**但不一定被查询实际使用.**
 
-**⑥.key**：实际使用的索引。如果为NULL，则没有使用索引。
-查询中若使用了覆盖索引，则该索引仅出现在key列表中
+**⑥.key**：实际 使用的索引。如果为NULL，则没有使用索引。
+查询中若使用了**覆盖索引**（查询的字段和建立的索引个数和顺序一致），则该索引仅出现在key列表中
 
-![MySQL数据库深入（一）](img/2018.11.03/52.png)
+![MySQL数据库深入(一)](img/2018.11.03/52.png)
 
 **⑦.key_len**：表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下，长度越短越好。
 key_len显示的值为索引字段的最大可能长度，**并非实际使用长度**，即key_len是根据表定义计算而得，不是通过表内检索出的。
+
+![MySQL深入(一)](img/2018.11.03/61.png)
+
+
 
 **⑧.ref**：显示索引的哪一列被使用了，如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值
 
@@ -1131,7 +1132,7 @@ key_len显示的值为索引字段的最大可能长度，**并非实际使用�
 ![MySQL数据库深入（一）](img/2018.11.03/54.png)
 
 **⑩.Extra**：包含不适合在其他列中显示但十分重要的额外信息
-1.using filesort：这个说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。
+1.using  ：这个说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。
 MySQL有两种方式可以生成有序的结果，通过排序操作或者使用索引，当Extra中出现了Using filesort说明MySQL使用了后者，但注意虽然叫filesort但并不是说明就是用了文件来进行排序，只要可能排序都是在内存里完成的。大部分情况下**利用索引排序更快**，所以一般这时也要考虑优化查询了。
 
 ![MySQL数据库深入（一）](img/2018.11.03/55.png)
