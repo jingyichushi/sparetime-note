@@ -29,7 +29,12 @@
 + [MySQL数据库深入（一）](note/MySQL深入（一）.md)
 + [MySQL数据库深入（二）](note/MySQL深入（二）.md)
 
+### Redis
 
++ [Redis基础知识（一）](note/Redis基础知识（一）.md)
+
++ [Redis基础知识（二）](note/Redis基础知识（二）.md)
++ [Redis基础知识（三）](note/Redis基础知识（三）.md)
 
 ## 其他
 
