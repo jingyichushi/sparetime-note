@@ -437,7 +437,6 @@ EXPLAIN SELECT * FROM staffs WHERE name LIKE 'July%';
 EXPLAIN SELECT name,age FROM staffs WHERE name LIKE '%July%';
 EXPLAIN SELECT id,name,age FROM staffs WHERE name LIKE '%July%';
 EXPLAIN SELECT name,age,add_time FROM staffs WHERE name LIKE '%July%';
- 
 ```
 
 ![MySQL数据库深入（二）](img/2018.11.06/21.png)
