@@ -612,7 +612,7 @@ VAR引号不可丢，SQL高级也不难；
 5.运维经理或者DBA进行SQL数据库服务器的参数调优。
 
 提取一下就是：
-0.为了避免出现问题，我们需要进行查询优化。
+**0.为了避免出现问题，我们需要进行查询优化。**
 1.慢查询日志的开启与捕获。
 2.explain+慢SQL分析。
 3.show profile查询SQL在MySQL服务器中的执行细节和生命周期情况。
@@ -725,8 +725,8 @@ order by 支持两种排序方式：Index（索引排序）和FileSort（文件�
 尽可能在索引列上完成排序操作，遵照索引建的最佳左前缀的原则
 
 ORDER BY满足两情况，会使用Index方式排序：
-①ORDER BY 语句使用索引最左前列；
-②使用Where子句与Order BY子句条件列组合满足索引最左前列。
+**①ORDER BY 语句使用索引最左前列；**
+**②使用Where子句与Order BY子句条件列组合满足索引最左前列。**
 
 如果不在索引列上，filesort有两种算法：mysql就要启动**双路排序和单路排序**
 双路排序：MySQL 4.1之前是使用双路排序,字面意思就是两次扫描磁盘，最终得到数据.
@@ -739,7 +739,7 @@ ORDER BY满足两情况，会使用Index方式排序：
 **解决方案：**
 1.order by 时select * 是一个大忌，只select 需要的字段，而不要用 *，当Query的字段大小总和小于max_length_for_sort_data而且排序字段不是text|bolb类型，会用改进后的算法-单路排序，否则会用老算法-双路排序。两种算法的数据都有可能超出sort_buffer的容量，超出之后，会创建temp文件进行合并排序，导致多次I/O，使用单路排序算法的风险会大一些，所以要提高sort_buffer_size。
 
-2. 提高sort_buffer_size，不管用哪种算法，提高这个参数，都会提高效率，当然要根据系统的能力去提高，因为这个参数是针对每个进程的
+2.提高sort_buffer_size，不管用哪种算法，提高这个参数，都会提高效率，当然要根据系统的能力去提高，因为这个参数是针对每个进程的
 
 3.提高max_length_for_sort_data，会增加用改进算法的概率，但是如果设置太高，数据总量超过sort_buffer_size的概率就会增大，明显症状是，高的磁盘I/O活动和低的cup使用率。
 
@@ -867,14 +867,14 @@ deptno mediumint unsigned not null default 0 /*部门编号*/
 创建函数时，如果报错：`ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration  and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)`
 
 由于开启过慢查询日志，因为我们开启了bin-log，我们就必须为我们的function指定一个参数。:
-```
+```mysql
 show variables like 'log_bin_trust_function_creators';
 set global log_bin_trust_function_creators=1;
 ```
 这样添加了参数以后，如果mysqld重启，上述参数又会消失，使其永久有效的做法是：
 
 在windows下配置my.ini或者在linux下配置my.cnf：
-```
+```properties
 [mysqld]
 log_bin_trust_function_creators=1
 ```
@@ -918,7 +918,6 @@ end $$
 #假如要删除
 #drop function rand_num;
 ```
-
 
 4.创建存储过程
 
