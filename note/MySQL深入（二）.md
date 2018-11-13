@@ -40,7 +40,7 @@ INSERT INTO `db02`.`article` (`id`, `author_id`, `category_id`, `views`, `commen
 SELECT id,author_id FROM article WHERE category_id = 1 AND comments > 1 ORDER BY views DESC LIMIT 1;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/1.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/1.png)
 
 
 
@@ -51,7 +51,7 @@ EXPLAIN SELECT id,author_id FROM article WHERE category_id = 1 AND comments > 1 
 
 sql查询优化信息:
 
-![MySQL数据库深入（二）](img/2018.11.06/2.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/2.png)
 
 很显然type是ALL，即最坏情况。Extra里还出现Using filesort（文件内排序），也是最坏情况，所以优化是必须的。
 
@@ -68,14 +68,14 @@ CREATE INDEX idx_article_ccv ON article (category_id,comments,views);
 EXPLAIN SELECT id,author_id FROM article WHERE category_id = 1 AND comments > 1 ORDER BY views DESC LIMIT 1;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/3.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/3.png)
 
 
 type变成了range，这是可以忍受的。但是extra里使用了Using filesort 仍然是无法接受的。 
 
 但是我们已经建立的索引，为啥没有用呢？ 
 这是因为按照BTree索引的工作原理先排序category_id，如果遇到相同的category_id则再排序comments，如果遇到相同的commetns则再排序views.
-当comments字段在联合索引中处于中间位置时， 因为comments > 1 条件是一个范围值（所谓的range），Mysql无法利用索引再对后面的views部分进行检索，即range类型查询字段后面索引无效。
+当comments字段在联合索引中处于中间位置时， 因为comments > 1 条件是一个范围值（所谓的range），**Mysql无法利用索引再对后面的views部分进行检索，即range类型查询字段后面索引无效。**
 
 
 #### 第二次优化
@@ -95,7 +95,7 @@ CREATE INDEX idx_article_cv ON article(category_id,views);
 EXPLAIN SELECT id,author_id FROM article WHERE category_id = 1 AND comments > 1 ORDER BY views DESC LIMIT 1;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/4.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/4.png)
 
 根据MySQL的查询分析报告可知，使用当前建立的索引，达到了type=ref,且extra中没有出现Using filesort，因此，我们现在使用的索引结构达到了最优的情况。
 
@@ -167,7 +167,7 @@ INSERT INTO book(card) VALUES(FLOOR(1+(RAND()*20)));
 SELECT * from class LEFT JOIN book ON class.card = book.card;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/5.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/5.png)
 
 通过explain命令来查看sql查询优化信息:
 ```sql
@@ -176,7 +176,7 @@ EXPLAIN SELECT * from class LEFT JOIN book ON class.card = book.card;
 
 sql查询优化信息:
 
-![MySQL数据库深入（二）](img/2018.11.06/6.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/6.png)
 
 结论：type 有All ，需要优化
 
@@ -195,7 +195,7 @@ ALTER TABLE `book` ADD INDEX Y(`card`);
 explain SELECT * from class LEFT JOIN book ON class.card = book.card;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/7.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/7.png)
 
 
 可以看到第二行的 type 变为了 ref , rows 也变成了 1 优化比较明显。
@@ -213,7 +213,7 @@ explain SELECT * from class LEFT JOIN book ON class.card = book.card;
 ```sql
 explain SELECT * from class RIGHT JOIN book ON class.card = book.card
 ```
-![MySQL数据库深入（二）](img/2018.11.06/8.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/8.png)
 
 
 删除索引:
@@ -229,7 +229,7 @@ create index X on class(card);
 ```sql
 explain SELECT * from class RIGHT JOIN book ON class.card = book.card
 ```
-![MySQL数据库深入（二）](img/2018.11.06/9.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/9.png)
 
 
 优化比较明显。这是因为RIGHT JOIN 条件用于确定如何从左表搜索行，右边一定都有，所以左边是我们的关键点，一定需要建立索引。
@@ -285,7 +285,7 @@ ALTER TABLE `book` ADD INDEX Y ( `card`);
 ```sql
 SELECT * FROM class LEFT JOIN book ON class.card=book.card LEFT JOIN phone ON book.card = phone.card;
 ```
-![MySQL数据库深入（二）](img/2018.11.06/10.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/10.png)
 
 通过explain命令来查看sql查询优化信息:
 ```sql
@@ -294,7 +294,7 @@ EXPLAIN SELECT * FROM class LEFT JOIN book ON class.card=book.card LEFT JOIN pho
 
 sql查询优化信息:
 
-![MySQL数据库深入（二）](img/2018.11.06/11.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/11.png)
 
 后 2 行的 type 都是 ref 且总 rows 优化很好,效果不错。因此索引最好设置在需要经常查询的字段中。
 
@@ -343,7 +343,7 @@ EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age=25;
 EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age=25 AND pos='dev';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/12.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/12.png)
 
 2.最佳左前缀法则（指的是从索引的左前列开始并且不跳过索引的列）
 如果索引了多列，要遵守**最左前缀法则**，指的是查询从索引的最左前列开始，不跳过索引中间的列。（带头大哥不能死，中间兄弟不能丢）
@@ -354,17 +354,18 @@ EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age=25 AND pos='dev';
 EXPLAIN SELECT * FROM staffs age=25 AND pos='dev';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/13.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/13.png)
 
 
 
 3.不要在索引上做任何操作（计算、函数、（自动or手动）类型转换），会导致索引失效而转向全表扫描
+
 ```sql
 EXPLAIN SELECT * FROM staffs WHERE name = 'July';
 EXPLAIN SELECT * FROM staffs WHERE LEFT(name, 4) = 'July';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/14.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/14.png)
 
 
 4.储存引擎不能使用索引中范围条件右边的列（用了>,<,like等右边的索引全部失效）
@@ -374,19 +375,20 @@ EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age = 25 AND pos = 'dev';
 EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age < 25 AND pos = 'dev';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/15.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/15.png)
 
 将age字段条件从=改成了<，查出的是个范围，所以可发现第三个字段pos索引失效了，因为type类型低了，key_len短了。ref也变成了range。
 
 
 
 5.尽量使用覆盖索引（只访问索引的查询），减少select *
+
 ```sql
 EXPLAIN SELECT * FROM staffs WHERE name = 'July';
 EXPLAIN SELECT name FROM staffs WHERE name = 'July';
 EXPLAIN SELECT name,age FROM staffs WHERE name = 'July';
 ```
-![MySQL数据库深入（二）](img/2018.11.06/16.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/16.png)
 
 可以发现，若将替换成索引列的话会用到Using index，直接从索引读，效果更佳，数据量大的时候更明显
 
@@ -395,19 +397,19 @@ EXPLAIN SELECT * FROM staffs WHERE name = 'July' AND age < 25 AND pos = 'dev';
 EXPLAIN SELECT name, age FROM staffs WHERE name = 'July' AND age < 25 AND pos = 'dev';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/17.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/17.png)
 
-Paste_Image.png
+
 可以发现，范围查找时，若将替换成索引列的话不仅会用到Using index索引级别还会是ref，key_len也短，效果更佳，数据量大的时候更明显.
 
 
 6.Mysql在使用不等于(!=、<>)或like的左模糊的时候无法试用索引会导致全表扫描。
 ```sql
-EXPLAIN SELECT * FROM staffs WHERE name != 'July';
+ EXPLAIN SELECT * FROM staffs WHERE name != 'July';
 EXPLAIN SELECT * FROM staffs WHERE name LIKE '%July';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/18.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/18.png)
 
 
 
@@ -418,7 +420,7 @@ EXPLAIN SELECT * FROM staffs WHERE name IS NULL;
 EXPLAIN SELECT * FROM staffs WHERE name IS NOT NULL;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/19.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/19.png)
 
 
 
@@ -429,7 +431,7 @@ EXPLAIN SELECT * FROM staffs WHERE name LIKE '%July';
 EXPLAIN SELECT * FROM staffs WHERE name LIKE 'July%';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/20.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/20.png)
 
 **解决 like `%str%` 索引失效的方法？**
 使用覆盖索引：
@@ -439,7 +441,7 @@ EXPLAIN SELECT id,name,age FROM staffs WHERE name LIKE '%July%';
 EXPLAIN SELECT name,age,add_time FROM staffs WHERE name LIKE '%July%';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/21.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/21.png)
 
 需要注意的是，select 后面的字段要和索引沾边，如果不沾边，就变为全表扫描。
 
@@ -451,23 +453,24 @@ EXPLAIN SELECT * FROM staffs WHERE name = '2000';
 EXPLAIN SELECT * FROM staffs WHERE name = 2000;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/22.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/22.png)
 
 10.少用or，用它来连接时会索引失效
 ```sql
 EXPLAIN SELECT * FROM staffs WHERE name = '2000' or name = 'z3';
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/23.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/23.png)
 
 总结：
 
-![MySQL数据库深入（二）](img/2018.11.06/24.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/24.png)
 
 
 一道关于索引的小题目：
 
 1.建表：
+
 ```
 create table test03(
 id int primary key not null auto_increment,
@@ -502,7 +505,7 @@ explain select * from test03 where c1='a1' and c2='a2' and c3='a3';
 explain select * from test03 where c1='a1' and c2='a2' and c3='a3' and c4='a4'; 
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/25.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/25.png)
 
 匹配的精度越来越高。
 
@@ -514,14 +517,14 @@ explain select * from test03 where c1='a1' and c2='a2' and c3>'a3' and c4='a4';
 explain select * from test03 where c1='a1' and c2='a2' and c4>'a4' and c3='a3'; 
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/26.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/26.png)
 
 第三条c4无法使用。
 
 ```sql
 explain select * from test03 where c1='a1' and c2='a2' and c4='a4' order by c3;
 ```
-![MySQL数据库深入（二）](img/2018.11.06/27.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/27.png)
 
 c1,c2用到索引，c3在这里的作用是排序而不是查找。
 
@@ -530,14 +533,14 @@ c1,c2用到索引，c3在这里的作用是排序而不是查找。
 explain select * from test03 where c1='a1' and c2='a2' order by c3;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/28.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/28.png)
 
 同上一条执行计划一样，与c4='a4'没有关系
 
 ```sql
 explain select * from test03 where c1='a1' and c2='a2' order by c4;
 ```
-![MySQL数据库深入（二）](img/2018.11.06/29.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/29.png)
 
 c1,c2用到索引，Extra中出现了Using filesort。
 
@@ -545,7 +548,7 @@ c1,c2用到索引，Extra中出现了Using filesort。
 explain select * from test03 where c1='a1' and c5='a5' order by c2,c3;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/30.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/30.png)
 
 只用c1一个字段索引，但是c2、c3用于排序，无Using filesort
 
@@ -553,7 +556,7 @@ explain select * from test03 where c1='a1' and c5='a5' order by c2,c3;
 explain select * from test03 where c1='a1' and c5='a5' order by c3,c2;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/31.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/31.png)
 
 有Using filesort，我们建的索引是c1,c2,c3,c4，它没有按照顺序来，3和2颠倒了。
 
@@ -563,7 +566,7 @@ explain select * from test03 where c1='a1' and c2='a2' order by c2,c3;
 explain select * from test03 where c1='a1' and c2='a2' and c5='a5' order by c2,c3;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/32.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/32.png)
 
 用c1、c2两个字段索引，但是c2、c3用于排序，无Using filesort
 
@@ -572,7 +575,7 @@ explain select * from test03 where c1='a1' and c2='a2' and c5='a5' order by c2,c
 explain select * from test03 where c1='a1' and c2='a2' and c5='a5' order by c3,c2;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/33.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/33.png)
 
 本例有常量c2(排序字段)的情况，所以无Using filesort，与`explain select * from test03 where c1='a1' and c5='a5' order by c3,c2;`例子不同。
 
@@ -581,7 +584,7 @@ explain select * from test03 where c1='a1' and c4='a4' group by c2,c3;
 explain select * from test03 where c1='a1' and c4='a4' group by c3,c2;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/34.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/34.png)
 
 第二条有Using temporary，有Using filesort。
 
@@ -664,7 +667,7 @@ EXPLAIN SELECT * FROM tblA WHERE age > 20 ORDER BY age;
 EXPLAIN SELECT * FROM tblA WHERE age > 20 ORDER BY age, birth;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/35.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/35.png)
 
 age一直在，所以不会产生Using filesort，因为索引从age开始，而order by正好也是从age开始，age索引可以用上。   
 
@@ -674,7 +677,7 @@ EXPLAIN SELECT * FROM tblA WHERE age > 20 ORDER BY birth;
 EXPLAIN SELECT * FROM tblA WHERE age > 20 ORDER BY birth, age;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/36.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/36.png)
 
 age不再order by范围内了,前面where条件还是大于号（范围值），索引断了，所以排序的时候无法用到索引，产生了Using filesort。
 
@@ -684,7 +687,7 @@ EXPLAIN SELECT * FROM tblA ORDER BY birth;
 EXPLAIN SELECT * FROM tblA WHERE birth > '2011-11-11 11:11:11' ORDER BY birth;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/37.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/37.png)
 
 age完全没用上，产生了Using filesort。
 
@@ -693,7 +696,7 @@ age完全没用上，产生了Using filesort。
 EXPLAIN SELECT * FROM tblA WHERE birth > '2011-11-11 11:11:11' ORDER BY age;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/38.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/38.png)
 
 不难发现，order by开头用到了age，索引不会产生Using filesort
 
@@ -705,7 +708,7 @@ EXPLAIN SELECT * FROM tblA ORDER BY age ASC, birth ASC;
 EXPLAIN SELECT * FROM tblA ORDER BY age DESC, birth DESC;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/39.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/39.png)
 
 排序的话要么都升序，要么都降序，否则mysql内部会不知道怎么排序，排序也是索引的一部分（Btree），所以不一致时会产生Using filesort
 
@@ -714,7 +717,7 @@ EXPLAIN SELECT * FROM tblA ORDER BY age DESC, birth DESC;
 EXPLAIN SELECT * FROM tblA WHERE age = 20 ORDER BY birth;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/40.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/40.png)
 
 没有Using filesort，是因为where 条件是个常量，而不是个范围，所以会自动传递到order by，所以order by 起始排序字段还是age。
 
@@ -771,12 +774,12 @@ MySQL的慢查询日志是MySQL提供的一种日志记录，它用来记录在M
 设置阙值时间:
 `set global long_query_time=3;`
 
-![MySQL数据库深入（二）](img/2018.11.06/41.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/41.png)
 
 为什么设置阙值时间后，还是默认的10秒？
 需要重新连接或者新开一个会话才能看到修改值。
 
-![MySQL数据库深入（二）](img/2018.11.06/42.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/42.png)
 
 
 
@@ -796,7 +799,7 @@ slow_query_log_file表示慢查询日志存放的位置。
 
 我们使用select sleep(4);
 
-![MySQL数据库深入（二）](img/2018.11.06/43.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/43.png)
 
 ### 日志分析工具mysqldumpslow
 
@@ -975,7 +978,7 @@ mysql提供用来分析当前会话中语句执行的资源消耗情况，可以
 2.开启功能，默认是关闭的，使用前需要开启
 `set profiling=on;`
 
-![MySQL数据库深入（二）](img/2018.11.06/44.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/44.png)
 
 3.运行sql:
 ```
@@ -988,13 +991,13 @@ select * from emp group by id%20 order by 5;
 show profiles;
 ```
 
-![MySQL数据库深入（二）](img/2018.11.06/45.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/45.png)
 
 5.诊断SQL:  
 `show profile cpu,block io for query id;`
 (id是上一步通过show profiles查询的Query_ID数值)；
 
-![MySQL数据库深入（二）](img/2018.11.06/46.png)
+![MySQL数据库深入（二）](http://img.bcoder.top/2018.02.21/46.png)
 
 show profile 后面还可以有很多参数，来查看执行的详细情况，其中我们主要用的是cpu，block io。详细参数介绍：
 all ：显示所有的开销信息

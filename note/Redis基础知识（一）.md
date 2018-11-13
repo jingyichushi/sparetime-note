@@ -75,7 +75,7 @@ Redis是以key-value store存储，data structure service 数据结构服务器�
 
 我们来看下面一个图：
 
-![Redis基础知识（一）](img/2018.11.07/1.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/1.png)
 
 通常，我们会将Redis服务器进行集群，并且采用主从模式（多个主节点和多个从节点），主节点主要负责数据的写（也可以进行读数据操作），从节点只负责读取数据，主节点会将数据定时或者实时（根据业务需要进行设计）的同步到从节点。从而实现数据的一致性，保证了并发访问。
 
@@ -83,31 +83,31 @@ Redis是以key-value store存储，data structure service 数据结构服务器�
 
 我们来看下面这张图：
 
-![Redis基础知识（一）](img/2018.11.07/2.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/2.png)
 
 在我们的生产环境中，有时候我们的Redis服务器的硬盘会存在数据满载的情况，如果继续进行写入，主节点将会出现意想不到的故障，那么我们就要对服务器进行拓展，一般有两种方式，水平拓展和垂直拓展，
 
 我们先来看一下水平拓展，水平拓展简单来说，就是加机器，添加若干台主节点和从节点，新写入的数据放入新的主从节点中。
 
-![Redis基础知识（一）](img/2018.11.07/3.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/3.png)
 
 垂直拓展的意思就是直接往相关的机器中添加硬盘。
 
-![Redis基础知识（一）](img/2018.11.07/4.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/4.png)
 
 ### 高可用性
 
 主从模式的好处显而易见，但是坏处也是显而易见的，也就是会出现单点故障的问题（单台主节点故障，导致整个主从网络无法正常工作）
 
-![Redis基础知识（一）](img/2018.11.07/5.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/5.png)
 
 而我们所说的高可用性，就是不止一个主节点（比如两个主节点，另一个主节点为备份主节点），当主节点宕机时，备份主节点会迅速接替主节点的工作，成为新的主节点，从而保证其正常运行。
 
-![Redis基础知识（一）](img/2018.11.07/6.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/6.png)
 
 ### Redis可靠性
 
-![Redis基础知识（一）](img/2018.11.07/7.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/7.png)
 
 Redis可靠性主要体现在对缓存数据的持久化。Redis支持两种持久化的方式：RDB和AOF,其中，RDB是定期将数据存到硬盘，AOF是实时存Redis的操作命令（相当于保存操作的脚本），一般来说，我们选用AOF这种方式来保证Redis可靠性。
 
@@ -117,11 +117,11 @@ Redis主要有三种模式，分别为主从模式，哨兵模式以及集群模
 
 之前我们就已经见过主从模式，主从模式是指由一个主节点，若干个从节点。优点之前也说过，能够保证高并发读写，缺点就是单点失效。
 
-![Redis基础知识（一）](img/2018.11.07/8.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/8.png)
 
 为了避免单点失效的问题，产生了一种新的模式，叫做哨兵模式，哨兵模式如下图所示：
 
-![Redis基础知识（一）](img/2018.11.07/9.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/9.png)
 
 
 如上图所示，我们有一台哨兵节点，用来监控三台机器，一旦主节点故障，哨兵会进行选举从节点转变成主节点，原先的主节点恢复后，变成从节点。
@@ -129,7 +129,7 @@ Redis主要有三种模式，分别为主从模式，哨兵模式以及集群模
 
 下面来介绍一下集群模式：
 
-![Redis基础知识（一）](img/2018.11.07/10.jpg)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/10.jpg)
 
 M1，M2，M3为redis三个主节点，S1，S2，S3为redis三个从节点，分别为M1，M2，M3备份数据以及故障切换使用。APP访问数据库可以通过连接任意一个Master节点实现。在三个Master节点的redis集群中，只容许有一个Master出故障，当多于一个Master宕机时，redis即不可用。当其中一个Master出现故障，其对应的Slave会接管故障Master的服务，保证redis 数据库的正常使用。
 
@@ -145,7 +145,7 @@ M1，M2，M3为redis三个主节点，S1，S2，S3为redis三个从节点，分�
 3 进入到redis-3.0.0目录下，进行编译 make
 编译完成后，如下图所示：
 
-![Redis基础知识（一）](img/2018.11.07/11.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/11.png)
 
 4 进入到src下进行安装`make install`验证(ll查看src下的目录，有redis-server 、redis-cil即可)
 
@@ -162,7 +162,7 @@ M1，M2，M3为redis三个主节点，S1，S2，S3为redis三个从节点，分�
 
 最后redis目录如下图:
 
-![Redis基础知识（一）](img/2018.11.07/12.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/12.png)
 
 8 启动时并指定配置文件：`./redis-server /usr/local/redis/etc/redis.conf`
 （注意要使用后台启动，所以修改redis.conf里的 daemonize 改为yes)
@@ -171,7 +171,7 @@ M1，M2，M3为redis三个主节点，S1，S2，S3为redis三个从节点，分�
 `ps -ef | grep redis`查看是否有redis服务
 或者查看端口：`netstat -tunpl | grep 6379`
 
-![Redis基础知识（一）](img/2018.11.07/13.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/13.png)
 
 进入redis客户端 ./redis-cli 退出客户端quit
 退出redis服务： 
@@ -204,7 +204,7 @@ String类型是包含很多种类型的特殊类型，并且是二进制安全�
 
 操作如下：
 
-![Redis基础知识（一）](img/2018.11.07/14.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/14.png)
 
 
 使用一次性设置多个和获取多个值的**mset**，**mget**方法：
@@ -227,7 +227,7 @@ String类型是包含很多种类型的特殊类型，并且是二进制安全�
 
 操作如下：
 
-![Redis基础知识（一）](img/2018.11.07/15.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/15.png)
 
 ### Hash类型
 
@@ -259,9 +259,9 @@ Hash类型是String类型的filed和value的映射表，或者说一个String集
 
 操作如下：
 
-![Redis基础知识（一）](img/2018.11.07/16.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/16.png)
 
-![Redis基础知识（一）](img/2018.11.07/17.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/17.png)
 
 ### List类型
 
@@ -302,9 +302,9 @@ List类型是一个链表结构的集合，其主要功能有push、pop、获取
 
 操作如下：
 
-![Redis基础知识（一）](img/2018.11.07/18.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/18.png)
 
-![Redis基础知识（一）](img/2018.11.07/19.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/19.png)
 
 ### Set类型
 
@@ -333,9 +333,9 @@ List类型是一个链表结构的集合，其主要功能有push、pop、获取
 
 操作如下：
 
-![Redis基础知识（一）](img/2018.11.07/20.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/20.png)
 
-![Redis基础知识（一）](img/2018.11.07/21.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/21.png)
 
 
 ### Zset类型
@@ -377,4 +377,4 @@ List类型是一个链表结构的集合，其主要功能有push、pop、获取
 
 9）**zremrangebyscore** zset [from] [to] (删除指定序号)
 
-![Redis基础知识（一）](img/2018.11.07/22.png)
+![Redis基础知识（一）](http://img.bcoder.top/2017.11.24/22.png)

@@ -22,7 +22,7 @@ Redis支持集群最小的单位为6个实例，3个主节点，3个从节点
 
 由于节点比较多，本人电脑资源有限，所以采取在一台虚拟机（虚拟机系统为centos）上部署6个Redis节点，从而实现Redis集群，具体拓扑如下图所示：
 
-![Redis基础知识（三）](img/2018.11.09/1.png)
+![Redis基础知识(三)](http://img.bcoder.top/2017.12.02/1.png)
 
 ### Redis集群搭建
 
@@ -442,7 +442,7 @@ Done installing documentation for redis after 1 seconds
 
 参看是否是否启动：**ps -el | grep redis**和**netstat -tunpl |grep redis**:
 
-![Redis基础知识（三）](img/2018.11.09/2.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/2.png)
 
 第五步：首先到redis3.0的安装目录下，然后执行redis-trib.rb命令
 ```
@@ -457,9 +457,9 @@ cd /usr/local/redis3.0/src
 
 如图集群就算是搭建成功了：
 
-![Redis基础知识（三）](img/2018.11.09/3.png)
+![Redis基础知识(三)](http://img.bcoder.top/2017.12.02/3.png)
 
-![Redis基础知识（三）](img/2018.11.09/4.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/4.png)
 
 如上图所示，redis集群脚本已经帮我们自动划分好集群了，最下方是询问我们是否同意这种分配方式，如果同意的我们选yes
 
@@ -511,11 +511,11 @@ redis-cli -p 端口号-h 主机物理地址 CLUSTER RESET SOFT
 
 cluster info(查看集群消息)、cluster nodes（查看节点列表）
 
-![Redis基础知识（三）](img/2018.11.09/8.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/8.png)
 
 下面我们克隆6个会话，分别连接6个节点：
 
-![Redis基础知识（三）](img/2018.11.09/5.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/5.png)
 
 我们来看看我们的连接参数：
 
@@ -534,10 +534,10 @@ redis-cli默认情况下连接的是本地的6379端口的redis服务器。
 
 下面我们来看测试结果：
 
-![Redis基础知识（三）](img/2018.11.09/6.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/6.png)
 
 
-![Redis基础知识（三）](img/2018.11.09/7.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/7.png)
 
 从测试结果看，我们只需要去存放数据，无需考虑我们要把数据存放在哪一个节点，Redis集群会主动帮我们做负载均衡。
 
@@ -676,9 +676,9 @@ cluster-config-file nodes1008.conf
 
 查看：
 
-![Redis基础知识（三）](img/2018.11.09/9.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/9.png)
 
-![Redis基础知识（三）](img/2018.11.09/10.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/10.png)
 
 我们发现虽然1007和1008节点启动了，但是并没有加入到集群中，要向加入到集群，就需要redis-trib的命令操作了
 
@@ -690,7 +690,7 @@ cluster-config-file nodes1008.conf
 ```
 命令参数如下：
 
-![Redis基础知识（三）](img/2018.11.09/11.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/11.png)
 
 下面来稍微解释一下常用的命令：
 1 create：创建一个集群环境host1:port1 ... hostN:portN（集群中的主从节点比例）
@@ -714,7 +714,7 @@ cluster-config-file nodes1008.conf
 
 操作结果如下：
 
-![Redis基础知识（三）](img/2018.11.09/12.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/12.png)
 
 步骤二：查看集群状态：
 
@@ -724,7 +724,7 @@ cluster-config-file nodes1008.conf
 ```
 注意：当添加节点成功以后，新增的节点不会有任何数据，因为它没有分配任何的slot（hash槽）。我们需要为新节点手工分配slot。
 
-![Redis基础知识（三）](img/2018.11.09/13.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/13.png)
 
 #### 为新加入的Master分配slot槽
 
@@ -734,11 +734,11 @@ cluster-config-file nodes1008.conf
 ```
 输出如下:
 
-![Redis基础知识（三）](img/2018.11.09/14.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/14.png)
 
-![Redis基础知识（三）](img/2018.11.09/15.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/15.png)
 
-![Redis基础知识（三）](img/2018.11.09/16.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/16.png)
 
 我们对上面的①，②，③进行解释一下：
 
@@ -747,7 +747,7 @@ cluster-config-file nodes1008.conf
 
 ③：输入yes确认开始执行分片任务。在最后我们再次看一下集群状态：
 
-![Redis基础知识（三）](img/2018.11.09/17.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/17.png)
 
 如上图所示，现在我们的1007已经有slot槽了，也就是说可以在1007上进行读写数据啦！到此为止我们的1007已经加入到集群中啦，并且是主节点（Master）
 
@@ -764,11 +764,11 @@ cluster-config-file nodes1008.conf
 ```
 结果如下:
 
-![Redis基础知识（三）](img/2018.11.09/18.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/18.png)
 
 提示添加成功后我们继续看一下集群的状态:
 
-![Redis基础知识（三）](img/2018.11.09/19.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/19.png)
 
 如图所示，还是一个master节点，没有被分配任何的slot槽。
 
@@ -784,7 +784,7 @@ OK（提示OK则操作成功）
 ```
 我们继续看一下当前集群的状态，如下图：我们已经成功的把1008放到1007这个主节点下面了，到此为止我们已经成功的添加完一个从节点了。
 
-![Redis基础知识（三）](img/2018.11.09/20.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/20.png)
 
 #### 将新加入集群的slave节点移除
 
@@ -795,11 +795,11 @@ OK（提示OK则操作成功）
 ```
 操作如下：
 
-![Redis基础知识（三）](img/2018.11.09/21.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/21.png)
 
 步骤二：再次查看一下集群状态，如下图所示，我们已经成功的移除了1008 slave节点，另外我们发现移除一个节点以后，当前节点的服务进程也会随之销毁。可以使用ps命令查看当前的服务（ps -el | grep redis），发现少了一个运行的server，也就是刚移除的1008从节点。
 
-![Redis基础知识（三）](img/2018.11.09/22.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/22.png)
 
 
 #### 将新加入集群的master节点移除
@@ -814,7 +814,7 @@ OK（提示OK则操作成功）
 
 操作如下：
 
-![Redis基础知识（三）](img/2018.11.09/23.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/23.png)
 
 ①：这里不会是正好500个槽，一般来说少一个，也就是499
 
@@ -826,7 +826,7 @@ OK（提示OK则操作成功）
 
 到此为止我们已经成功的把1007主节点的数据迁移到1001上去了，我们可以看一下现在的集群状态如下图，你会发现1007下面已经没有任何数据（slot）槽了，证明迁移成功！
 
-![Redis基础知识（三）](img/2018.11.09/24.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/24.png)
 
 步骤二：最后我们直接使用del-node命令删除1007主节点即可（cadc74cba223ddae59b495be280a835882f48f65）
 ```
@@ -835,11 +835,11 @@ OK（提示OK则操作成功）
 
 操作结果如下：
 
-![Redis基础知识（三）](img/2018.11.09/25.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/25.png)
 
 最后：我们查看集群状态，一切还原为最初始状态(槽位略有变化)
 
-![Redis基础知识（三）](img/2018.11.09/26.png)
+![Redis基础知识（三）](http://img.bcoder.top/2017.12.02/26.png)
 
 
 

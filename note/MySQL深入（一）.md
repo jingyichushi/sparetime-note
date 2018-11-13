@@ -103,7 +103,7 @@ service MySQL stop
 **在linux下查看安装目录**：
 `ps -ef|grep MySQL`
 
-![MySQL数据库深入（一）](img/2018.11.03/1.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/1.png)
 
 **修改配置文件位置:**
 `cp /usr/share/MySQL/my-huge.cnf /etc/my.cnf`或者`cp /usr/share/MySQL/my-default.cnf /etc/my.cnf`
@@ -207,7 +207,7 @@ Linux: /etc/my.cnf文件
 
 我们来先看官网的一张图：
 
-![MySQL数据库深入（一）](img/2018.11.03/2.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/2.png)
 
 我们来介绍一下各个部分：
 **Connectors**：不同语言中与SQL的交互。
@@ -264,14 +264,14 @@ MySQL的查询流程大致是：
 MySQL> show engines;
 ```
 
-![MySQL数据库深入（一）](img/2018.11.03/3.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/3.png)
 
 看你的 MySQL 当前默认的存储引擎:
 ```
 show variables like '%storage_engine%';
 ```
 
-![MySQL数据库深入（一）](img/2018.11.03/4.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/4.png)
 
 
 目前主流的MySQL存储引擎有：MyISAM和InnoDB。
@@ -307,7 +307,7 @@ MySQL 5.6版本中，作为默认存储引擎。
 
 #### MyISAM和InnoDB对比
 
-![MySQL数据库深入（一）](img/2018.11.03/5.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/5.png)
 
 阿里巴巴通过Percona为MySQL数据库服务器进行了改进，在功能和性能上较MySQL有着很显著的提升。该版本提升了在高负载情况下的InnoDB的性能、为DBA提供一些非常有用的性能诊断工具；另外有更多的参数和命令来控制服务器行为。
 该公司新建了一款存储引擎叫xtradb完全可以替代innodb,并且在性能和并发上做得更好,
@@ -381,11 +381,11 @@ LIMIT <limit_number>
 **总结-SQL解析顺序:**
 
 
-![MySQL数据库深入（一）](img/2018.11.03/6.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/6.png)
 
 #### 7种join分析
 
-![MySQL数据库深入（一）](img/2018.11.03/7.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/7.png)
 
 #### join SQL 练习
 
@@ -427,7 +427,7 @@ INSERT INTO tbl_emp(NAME,deptId) VALUES('s9',51);
 
 ```
 
-![MySQL数据库深入（一）](img/2018.11.03/8.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/8.png)
 
 
 
@@ -437,27 +437,27 @@ INSERT INTO tbl_emp(NAME,deptId) VALUES('s9',51);
 1、A、B两表共有
 `select * from tbl_emp a inner join tbl_dept b on a.deptId = b.id;`
 
-![MySQL数据库深入（一）](img/2018.11.03/9.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/9.png)
 
 2、A、B两表共有+A的独有
 `select * from tbl_emp a left join tbl_dept b on a.deptId = b.id;`
 
-![MySQL数据库深入（一）](img/2018.11.03/10.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/10.png)
 
 3、A、B两表共有+B的独有
 `select * from tbl_emp a right join tbl_dept b on a.deptId = b.id;`
 
-![MySQL数据库深入（一）](img/2018.11.03/11.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/11.png)
 
 4、A的独有
 `select * from tbl_emp a left join tbl_dept b on a.deptId = b.id where b.id is null;`
 
-![MySQL数据库深入（一）](img/2018.11.03/12.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/12.png)
 
 5、B的独有
 `select * from tbl_emp a right join tbl_dept b on a.deptId = b.id where a.deptId is null;`
 
-![MySQL数据库深入（一）](img/2018.11.03/13.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/13.png)
 
 6、AB全有
 **MySQL Full Join的实现 因为MySQL不支持FULL JOIN,下面是替代方法
@@ -471,7 +471,7 @@ SELECT *
 FROM tbl_emp a RIGHT JOIN tbl_dept b ON a.deptId = b.id;
 ```
 
-![MySQL数据库深入（一）](img/2018.11.03/14.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/14.png)
 
 7、A的独有 + B的独有
 
@@ -485,7 +485,7 @@ FROM tbl_emp a RIGHT JOIN tbl_dept b ON a.deptId = b.id
 WHERE a.`deptId` IS NULL;
 ```
 
-![MySQL数据库深入（一）](img/2018.11.03/15.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/15.png)
 
 ### 索引简介
 
@@ -504,7 +504,7 @@ MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取�
 在数据之外，数据库系统还维护着满足特定查找算法的数据结构，**这些数据结构以某种方式引用（指向）数据**，这样就可以在这些数据结构上实现高级查找算法。这种数据结构，就是索引。
 下图就是一种可能的索引方式示例：
 
-![MySQL数据库深入（一）](img/2018.11.03/1.jpg)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/1.jpg)
 
 左边是数据表，共有两列七条记录，最左边的是数据记录的物理地址。
 
@@ -519,7 +519,7 @@ MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取�
 InnoDB和MyISAM中其实不是用的B-Tree，而是用的B+Tree数据结构来保存索引。
 B+Tree意味着所有的值（被索引的列）都是按顺序存储的，每个叶子节点到跟节点距离相等。
 
-![MySQL数据库深入（一）](img/2018.11.03/16.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/16.png)
 
 **B+的特性:**
 1、所有关键字都出现在叶子结点的链表中，且链表中的关键字是有序的。
@@ -627,7 +627,7 @@ B-Tree结构的数据可以让系统高效的找到数据所在的磁盘块。�
 
 B-Tree中的每个节点根据实际情况可以包含大量的关键字信息和分支，如下图所示为一个3阶的B-Tree：
 
-![MySQL数据库深入（一）](img/2018.11.03/17.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/17.png)
 
 每个节点占用一个盘块的磁盘空间，一个节点上有两个升序排序的关键字和三个指向子树根节点的指针，指针存储的是子节点所在磁盘块的地址。两个关键词划分成的三个范围域对应三个指针指向的子树的数据的范围域。以根节点为例，关键字为17和35，P1指针指向的子树的数据范围为小于17，P2指针指向的子树的数据范围为17~35，P3指针指向的子树的数据范围为大于35。
 
@@ -654,7 +654,7 @@ B+Tree相对于B-Tree有几点不同：
 
 将上一节中的B-Tree优化，由于B+Tree的非叶子节点只存储键值信息，假设每个磁盘块能存储4个键值及指针信息，则变成B+Tree后其结构如下图所示：
 
-![MySQL数据库深入（一）](img/2018.11.03/18.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/18.png)
 
 通常在B+Tree上有两个头指针，一个指向根节点，另一个指向关键字最小的叶子节点，而且所有叶子节点（即数据节点）之间是一种链式环结构。因此可以对B+Tree进行两种查找运算：一种是对于主键的范围查找和分页查找，另一种是从根节点开始，进行随机查找。
 
@@ -681,7 +681,7 @@ B-树和B+树最重要的一个区别就是B+树只有叶节点存放数据，�
 **主存存取原理**
 目前计算机使用的主存基本都是随机读写存储器（RAM），现代RAM的结构和存取原理比较复杂，这里本文抛却具体差别，抽象出一个十分简单的存取模型来说明RAM的工作原理。
 
-![MySQL数据库深入（一）](img/2018.11.03/19.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/19.png)
 
 从抽象角度看，主存是一系列的存储单元组成的矩阵，每个存储单元存储固定大小的数据。每个存储单元有唯一的地址，现代主存的编址规则比较复杂，这里将其简化成一个二维地址：通过一个行地址和一个列地址可以唯一定位到一个存储单元。图5展示了一个4 x 4的主存模型。
 
@@ -698,13 +698,13 @@ B-树和B+树最重要的一个区别就是B+树只有叶节点存放数据，�
 
 下图是磁盘的整体结构示意图。
 
-![MySQL数据库深入（一）](img/2018.11.03/20.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/20.png)
 
 一个磁盘由大小相同且同轴的圆形盘片组成，磁盘可以转动（各个磁盘必须同步转动）。在磁盘的一侧有磁头支架，磁头支架固定了一组磁头，每个磁头负责存取一个磁盘的内容。磁头不能转动，但是可以沿磁盘半径方向运动（实际是斜切向运动），每个磁头同一时刻也必须是同轴的，即从正上方向下看，所有磁头任何时候都是重叠的（不过目前已经有多磁头独立技术，可不受此限制）。
 
 下图是磁盘结构的示意图。
 
-![MySQL数据库深入（一）](img/2018.11.03/21.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/21.png)
 
 盘片被划分成一系列同心环，圆心是盘片中心，每个同心环叫做一个磁道，所有半径相同的磁道组成一个柱面。磁道被沿半径线划分成一个个小的段，每个段叫做一个扇区，每个扇区是磁盘的最小存储单元。为了简单起见，我们下面假设磁盘只有一个盘片和一个磁头。
 
@@ -744,7 +744,7 @@ MySQL中普遍使用B+Tree做索引，但在实现上又根据聚簇索引和非
 
 **所谓聚簇索引，就是指主索引文件和数据文件为同一份文件，聚簇索引主要用在Innodb存储引擎中。在该索引实现方式中B+Tree的叶子节点上的data就是数据本身，key为主键，如果是一般索引的话，data便会指向对应的主索引**，如下图所示：
 
-![MySQL数据库深入（一）](img/2018.11.03/22.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/22.png)
 
 
 在B+Tree的每个叶子节点增加一个指向相邻叶子节点的指针，就形成了带有顺序访问指针的B+Tree。做这个优化的目的是为了提高区间访问的性能，例如上图中如果要查询key为从18到49的所有数据记录，当找到18后，只需顺着节点和指针顺序遍历就可以一次性访问到所有数据节点，极大提到了区间查询效率。
@@ -753,7 +753,7 @@ MySQL中普遍使用B+Tree做索引，但在实现上又根据聚簇索引和非
 
 **非聚簇索引就是指B+Tree的叶子节点上的data，并不是数据本身，而是数据存放的地址。主索引和辅助索引没啥区别，只是主索引中的key一定得是唯一的。主要用在MyISAM存储引擎中**，如下图：
 
-![MySQL数据库深入（一）](img/2018.11.03/23.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/23.png)
 
 非聚簇索引比聚簇索引多了一次读取数据的IO操作，所以查找性能上会差。
 
@@ -765,11 +765,11 @@ MySQL中普遍使用B+Tree做索引，但在实现上又根据聚簇索引和非
 
 MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：
 
-![MySQL数据库深入（一）](img/2018.11.03/24.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/24.png)
 
 这里设表一共有三列，假设我们以Col1为主键，则上图是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：
 
-![MySQL数据库深入（一）](img/2018.11.03/25.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/25.png)
 
 同样也是一颗B+Tree，data域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。
 
@@ -781,13 +781,13 @@ MyISAM的索引方式也叫做“非聚集”的，之所以这么称呼是为�
 
 第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。
 
-![MySQL数据库深入（一）](img/2018.11.03/26.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/26.png)
 
 上图是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶节点包含了完整的数据记录。这种索引叫做聚集索引。因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。
 
 第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，下图为定义在Col3上的一个辅助索引：
 
-![MySQL数据库深入（一）](img/2018.11.03/27.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/27.png)
 
 
 这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：**首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。**
@@ -864,7 +864,7 @@ Explain+SQL语句
 
 例如：explain select * from tbl_emp;
 
-![MySQL数据库深入（一）](img/2018.11.03/28.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/28.png)
 
 
 
@@ -913,77 +913,83 @@ values
 alter table people add key(zipcode,firstname,lastname);
 ```
 
-**①.id**：select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序，三种情况：
+##### id
+
+**id**：select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序，三种情况：
 1.id相同，执行顺序由上往下
 `EXPLAIN SELECT * FROM people,people_car;`
 
-![MySQL数据库深入（一）](img/2018.11.03/29.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/29.png)
 
 2.id不同，如果是子查询，id序号会递增，**id值越大优先级越高，越先被执行**
 `explain select zipcode from (select * from people a) b;`
 
-![MySQL数据库深入（一）](img/2018.11.03/30.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/30.png)
 
 3.id相同不同，同时存在（id如果相同，可以认为是一组，从上往下执行；在所有组中，id越大，优先级越高，越先执行）
 `explain select zipcode from (select * from people a) b,people_car c;`
 
-![MySQL数据库深入（一）](img/2018.11.03/31.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/31.png)
 
 DERIVED表示衍生表。
 
 4.该值可能为NULL，如果这一行用来说明的是其他行的联合结果，比如下面的语句：
 `explain select * from people where zipcode = 100000 union select * from people where zipcode = 200000;`
 
-![MySQL数据库深入（一）](img/2018.11.03/32.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/32.png)
 
-**②.select_type**：主要包含下面几种类型：
+##### select_type
+
+**select_type**：主要包含下面几种类型：
 1.SIMPLE:简单的select查询，查询中**不包含子查询或者UNION**
 `explain select zipcode,firstname,lastname from people;`
 
-![MySQL数据库深入（一）](img/2018.11.03/33.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/33.png)
 
 2.PRIMARY:查询中若包含任何复杂的子部分，最外层查询则被标记为PRIMARY（最后加载的表）
 `explain select zipcode from (select * from people a) b;`
 
-![MySQL数据库深入（一）](img/2018.11.03/34.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/34.png)
 
 3.SUBQUERY:在SELECT或WHERE列表中包含子查询
 `explain select * from people  where id =  (select id from people where zipcode = 100000);`
 
-![MySQL数据库深入（一）](img/2018.11.03/35.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/35.png)
 
 4.DERIVED:在FROM列表中包含的子查询被标记为DERIVED(衍生)，MYSQL会递归查询执行这些子查询，把结果放在**临时表**中。
 `explain select zipcode from (select * from people a) b;`
 
-![MySQL数据库深入（一）](img/2018.11.03/36.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/36.png)
 
 5.UNION:若第二个SELECT出现在UNION之后，被标记为UNION，若UNION包含在FROM子句的子查询中，外层SELECT将被标记为：DERIVED
 
 `explain select * from people where zipcode = 100000 union select * from people where zipcode = 200000;`
 
-![MySQL数据库深入（一）](img/2018.11.03/37.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/37.png)
 
 6.UNION RESULT: 从UNION表获取结果的SELECT
 
 `explain select * from people where zipcode = 100000 union select * from people where zipcode = 200000;`
 
-![MySQL数据库深入（一）](img/2018.11.03/38.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/38.png)
 
 7.DEPENDENT UNION：顾名思义，首先需要满足UNION的条件，及UNION中第二个以及后面的SELECT语句，同时该语句依赖外部的查询。
 `explain select * from people where id in  (select id from people where zipcode = 100000 union select id from people where zipcode = 200000 );`
 
-![MySQL数据库深入（一）](img/2018.11.03/39.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/39.png)
 
 8.DEPENDENT SUBQUERY:和DEPENDENT UNION相对UNION一样。
 `explain select * from people o where exists  (select id from people where zipcode = 100000 and id = o.id union select id from people where zipcode = 200000  and id = o.id);`
 
-![MySQL数据库深入（一）](img/2018.11.03/40.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/40.png)
+
+##### table
 
 **③.table**：显示的这一行信息是关于哪一张表的。有时候并不是真正的表名。
 
 `explain select * from (select * from (select * from people a) b ) c;`
 
-![MySQL数据库深入（一）](img/2018.11.03/41.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/41.png)
 
 可以看到如果指定了别名就显示的别名。
 
@@ -992,7 +998,8 @@ DERIVED表示衍生表。
 还有`<unionM,N>`这种类型，出现在UNION语句中。
 
 注意：MySQL对待这些表和普通表一样，但是这些“临时表”是没有任何索引的。
-**④.type**
+
+##### type
 
 主要取值有以下几种:ALL、index、range、ref、eq_ref、const、system、 null 
 
@@ -1009,21 +1016,21 @@ system>const>eq_ref>ref>rang>index>all
 1.system:这是const连接类型的一种特例，表仅有一行,满足条件。
 `explain select * from (select * from people where id = 1 )b;`
 
-![MySQL数据库深入（一）](img/2018.11.03/42.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/42.png)
 
 2.const:当确定最多只会有一行匹配的时候，MySQL优化器会在查询前读取它而且只读取一次，因此非常快。const只会用在将常量和主键或唯一索引进行比较时，而且是比较所有的索引字段。people表在id上有一个主键索引，在(zipcode,firstname,lastname)有一个二级索引。
 
 主键索引（满足）：`explain select * from people where id=1;`
 
-![MySQL数据库深入（一）](img/2018.11.03/43.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/43.png)
 
 复合索引（不满足）：`explain select * from people where zipcode = 100000 and firstname = 'san' and lastname = 'zhang';`
 
-![MySQL数据库深入（一）](img/2018.11.03/44.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/44.png)
 
 注意下面的也不是const table，虽然也是主键，也只会返回一条结果。
 
-![MySQL数据库深入（一）](img/2018.11.03/45.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/45.png)
 
 3.eq_ref:唯一性索引扫描。对于每个索引建。表中只有一条记录与之匹配。常见于主键或者唯一索引扫描。
 
@@ -1032,7 +1039,7 @@ eq_ref类型是除了const外最好的连接类型，它用在一个索引的所
 
 `explain select * from people a,people_car b where a.id = b.people_id;`
 
-![MySQL数据库深入（一）](img/2018.11.03/46.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/46.png)
 
 如上图所示，出现的都是ALL，这是因为我们使用的InnoDB引擎造成的，如果MyISAM引擎，则会出现eq_ref。
 
@@ -1074,14 +1081,14 @@ values
 
 `explain select * from people2 a,people_car2 b where a.id = b.people_id;`
 
-![MySQL数据库深入（一）](img/2018.11.03/47.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/47.png)
 
 我想这是InnoDB对性能权衡的一个结果。
 
 eq_ref可以用于使用 = 操作符比较的带索引的列。比较值可以为常量或一个使用在该表前面所读取的表的列的表达式。如果关联所用的索引刚好又是主键，那么就会变成更优的const了：
 `explain select * from people2 a,people_car2 b where a.id = b.people_id and b.people_id = 1;`
 
-![MySQL数据库深入（一）](img/2018.11.03/48.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/48.png)
 
 
 4.ref:这个类型跟eq_ref不同的是，它用在关联操作只使用了索引的最左前缀，或者索引不是UNIQUE和PRIMARY KEY。ref可以用于使用=或<=>操作符的带索引的列。
@@ -1095,67 +1102,79 @@ create index people_id on people_car2(people_id);
 
 然后执行：`explain select * from people2 a,people_car2 b where a.id = b.people_id and a.id > 2;`
 
-![MySQL数据库深入（一）](img/2018.11.03/49.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/49.png)
 
 5.range:只检索给定范围的行，使用一个索引来选择行。key列显示使用了哪个索引。key_len包含所使用索引的最长关键元素。在该类型中ref列为NULL。当使用=、<>、>、>=、<、<=、IS NULL、<=>、BETWEEN或者IN操作符，用常量比较关键字列时，可以使用range:
 `explain select * from people where id > 2;`
 
-![MySQL数据库深入（一）](img/2018.11.03/50.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/50.png)
 
 6.index:该联接类型与ALL相同，除了只有索引树被扫描。这通常比ALL快，因为索引文件通常比数据文件小。这个类型通常的作用是告诉我们查询是否使用索引进行排序操作。
 `explain select id from people;`
 
-![MySQL数据库深入（一）](img/2018.11.03/51.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/51.png)
 
 7.ALL:最慢的一种方式，即全表扫描。
 
-**⑤.possible_keys**:显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则该索引将被列出，**但不一定被查询实际使用.**
+##### possible_keys
 
-**⑥.key**：实际 使用的索引。如果为NULL，则没有使用索引。
+**possible_keys**:显示可能应用在这张表中的索引，一个或多个。查询涉及到的字段上若存在索引，则该索引将被列出，**但不一定被查询实际使用.**
+
+##### key
+
+**key**：实际 使用的索引。如果为NULL，则没有使用索引。
 查询中若使用了**覆盖索引**（查询的字段和建立的索引个数和顺序一致），则该索引仅出现在key列表中
 
-![MySQL数据库深入(一)](img/2018.11.03/52.png)
+![MySQL数据库深入(一)](http://img.bcoder.top/2018.02.20/52.png)
 
-**⑦.key_len**：表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下，长度越短越好。
+##### key_len
+
+
+
+**key_len**：表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确性的情况下，长度越短越好。
 key_len显示的值为索引字段的最大可能长度，**并非实际使用长度**，即key_len是根据表定义计算而得，不是通过表内检索出的。
 
-![MySQL深入(一)](img/2018.11.03/61.png)
+![MySQL深入(一)](http://img.bcoder.top/2018.02.20/61.png)
 
+##### ref
 
+**ref**：显示索引的哪一列被使用了，如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值
 
-**⑧.ref**：显示索引的哪一列被使用了，如果可能的话，是一个常数。哪些列或常量被用于查找索引列上的值
+![MySQL数据库深入(一)](http://img.bcoder.top/2018.02.20/53.png)
 
-![MySQL数据库深入（一）](img/2018.11.03/53.png)
+##### rows
 
-**⑨.rows**：根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数
+**rows**：根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数
 
-![MySQL数据库深入（一）](img/2018.11.03/54.png)
+![MySQL数据库深入(一)](http://img.bcoder.top/2018.02.20/54.png)
 
-**⑩.Extra**：包含不适合在其他列中显示但十分重要的额外信息
+##### Extra
+
+**Extra**：包含不适合在其他列中显示但十分重要的额外信息
 1.using  ：这个说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序进行读取。
 MySQL有两种方式可以生成有序的结果，通过排序操作或者使用索引，当Extra中出现了Using filesort说明MySQL使用了后者，但注意虽然叫filesort但并不是说明就是用了文件来进行排序，只要可能排序都是在内存里完成的。大部分情况下**利用索引排序更快**，所以一般这时也要考虑优化查询了。
 
-![MySQL数据库深入（一）](img/2018.11.03/55.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/55.png)
 
-![MySQL数据库深入（一）](img/2018.11.03/56.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/56.png)
 
 
 后者速度比较快。
 
 2.Using temporary：说明使用了临时表，一般看到它说明查询**需要优化**了，就算避免不了临时表的使用也要尽量避免硬盘临时表的使用。如果查询包含不同列的GROUP BY和ORDER BY子句，则通常会发生这种情况。
 
-![MySQL数据库深入（一）](img/2018.11.03/57.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/57.png)
 
 3.Using index ：说明查询是覆盖了索引的，这是好事情。MySQL直接从索引中过滤不需要的记录并返回命中的结果。这是MySQL服务层完成的，但无需再回表查询记录。
 
 如果同时出现using where, 表明索引被用来执行索引键值的查找
 
-![MySQL数据库深入（一）](img/2018.11.03/58.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/58.png)
 
 
 如果没有同时出现using where,表明索引用来读取数据而非执行查找动作。
 
-![MySQL数据库深入（一）](img/2018.11.03/59.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/59.png)
 
 我们来看一下覆盖索引：如果索引包含所有满足查询需要的数据的索引成为覆盖索引(Covering Index)，也就是平时所说的不需要回表操作，使用explain，可以通过输出的extra列来判断，对于一个索引覆盖查询，显示为using index,MySQL查询优化器在执行查询前会决定是否有索引覆盖查询
 
@@ -1183,7 +1202,7 @@ MySQL有两种方式可以生成有序的结果，通过排序操作或者使用
 
 最后，再看一个查询计划的例子：
 
-![MySQL数据库深入（一）](img/2018.11.03/60.png)
+![MySQL数据库深入（一）](http://img.bcoder.top/2018.02.20/60.png)
 
 
 第一行：id列为1，表示第一个select，select_type列的primary表示该查询为外层查询，table列被标记为<derived3>，表示查询结果来自一个衍生表，其中3代表该查询衍生自第三个select查询，即id为3的select。[select d1.name......]
