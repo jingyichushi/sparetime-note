@@ -28,6 +28,7 @@
 
 + [MySQL数据库深入（一）](note/MySQL深入（一）.md)
 + [MySQL数据库深入（二）](note/MySQL深入（二）.md)
++ [MySQL数据库深入（三）](note/MySQL深入（三）.md)
 
 ### Redis
 
