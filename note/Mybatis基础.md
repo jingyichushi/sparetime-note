@@ -81,13 +81,11 @@ Mapper接口是没有实现类的，当调用接口方法时，接口全限名+�
 
 举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面id = findStudentById的MappedStatement。
 
-在Mybatis中，每一个<select>、<insert>、<update>、<delete>标签，都会被解析为一个MappedStatement对象。
+在Mybatis中，每一个`<select>`、`<insert>`、`<update>`、`<delete>`标签，都会被解析为一个MappedStatement对象。
 
 Dao接口里的方法，是不能重载的，因为是全限名+方法名的保存和寻找策略。
 
 Dao接口的工作原理是JDK动态代理，Mybatis运行时会使用JDK动态代理为Dao接口生成代理proxy对象，代理对象proxy会拦截接口方法，转而执行MappedStatement所代表的sql，然后将sql执行结果返回。
-
-
 
 
 
@@ -101,7 +99,7 @@ Mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行�
 
 **6、Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？**
 
-第一种是使用<resultMap>标签，逐一定义列名和对象属性名之间的映射关系。
+第一种是使用`<resultMap>`标签，逐一定义列名和对象属性名之间的映射关系。
 
 第二种是使用sql列的别名功能，将列别名书写为对象属性名，比如T_NAME AS NAME，对象属性名一般是name，小写，但是列名不区分大小写，Mybatis会忽略列名大小写，智能找到与之对应对象属性名，你甚至可以写成T_NAME AS NaMe，Mybatis一样可以正常工作。
 
@@ -183,8 +181,6 @@ Public UserselectUser(String name,String area);
 
 第2种：    使用 @param 注解:
 
- 
-
 ```
 import org.apache.ibatis.annotations.param;
 public interface usermapper {
@@ -212,8 +208,6 @@ public interface usermapper {
 
 
 Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写动态sql，完成逻辑判断和动态拼接sql的功能。*
-
-
 
 Mybatis提供了9种动态sql标签：trim|where|set|foreach|if|choose|when|otherwise|bind。
 
