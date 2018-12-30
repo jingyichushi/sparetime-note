@@ -25,7 +25,7 @@
 ### MyBatis
 
 + [Mybatis基础](note/Mybatis基础.md)
-+ [Mybatis杂记](note/Mybatis杂记.md)
++ [Mybatis杂记](note/MyBatis杂记.md)
 + [MyBatis Plus笔记](note/MyBatisPlus笔记.md)
 
 

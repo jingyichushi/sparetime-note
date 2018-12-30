@@ -203,7 +203,7 @@ public interface usermapper {
 
 
 
-**10、Mybatis动态sql是做什么的？都有哪些动态sql？能简述一下动态sql的执行原理不？****
+**10、Mybatis动态sql是做什么的？都有哪些动态sql？能简述一下动态sql的执行原理不？**
 
 
 
