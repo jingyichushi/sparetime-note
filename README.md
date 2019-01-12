@@ -18,6 +18,12 @@
 
 
 
+## 数据结构与算法
+
++ KMP算法介绍（todo）
++ 布隆过滤器介绍(todo)
++ 
+
 
 
 ## 后端框架
@@ -74,7 +80,7 @@
 
 ## 数据库
 
-### MySQL
+### SQL
 
 + [MySQL数据库深入（一）](note/MySQL深入（一）.md)
 + [MySQL数据库深入（二）](note/MySQL深入（二）.md)
@@ -84,13 +90,14 @@
 
 
 
-### Redis
+### NoSQL
 
 + [Redis基础知识（一）](note/Redis基础知识（一）.md)
 + [Redis基础知识（二）](note/Redis基础知识（二）.md)
 + [Redis基础知识（三）](note/Redis基础知识（三）.md)
++ [缓存常见问题及其解决办法](note/缓存常见问题及其解决办法.md)
 
-
++ guava cache学习（todo）
 
 
 
