@@ -36,9 +36,11 @@
 + [Mybatis杂记](note/MyBatis杂记.md)
 + [MyBatis Plus笔记](note/MyBatisPlus笔记.md)
 
+### Spring
+
++ Spring事务传播机制
 
 
-​	
 
 ### Spring MVC
 
@@ -77,6 +79,12 @@
 + [JsonPath学习](note/JsonPath学习.md)
 
 
+
+## 消息中间件
+
+### RocketMQ
+
++ [RocketMQ实现分布式事务](note/RocketMQ实现分布式事务.md)
 
 
 
